@@ -1,0 +1,17 @@
+# Terraform files
+.terraform/
+*.tfplan
+*.tfstate
+*.tfstate.backup
+crash.log
+terraform.tfstate
+terraform.tfstate.backup
+*.tfvars
+*.tfvars.json
+
+# Azure CLI cache
+.azure/
+
+# OS generated files
+.DS_Store
+Thumbs.db
