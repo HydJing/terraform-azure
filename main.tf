@@ -92,3 +92,20 @@ resource "azurerm_public_ip" "terraform-test-ip" {
     environment = "dev" # Tag to specify the environment.
   }
 }
+
+resource "azurerm_network_interface" "terraform-test-nic" {
+  name                = "terraform-test-nic"                              # Name of the Network Interface.
+  location            = azurerm_resource_group.terraform-test-rg.location # Azure region for the Network Interface.
+  resource_group_name = azurerm_resource_group.terraform-test-rg.name     # The Resource Group name.
+
+  ip_configuration {
+    name                          = "internal"                              # Name of the IP configuration.
+    subnet_id                     = azurerm_subnet.terraform-test-subnet.id # The ID of the subnet this NIC will be connected to.
+    private_ip_address_allocation = "Dynamic"                               # Method for allocating the private IP address ("Static" or "Dynamic").
+    public_ip_address_id          = azurerm_public_ip.terraform-test-ip.id  # The ID of the Public IP address to associate with this NIC.
+  }
+
+  tags = {
+    environment = "dev" # Tag to specify the environment.
+  }
+}
