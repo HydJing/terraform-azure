@@ -109,3 +109,31 @@ resource "azurerm_network_interface" "terraform-test-nic" {
     environment = "dev" # Tag to specify the environment.
   }
 }
+
+resource "azurerm_linux_virtual_machine" "terraform-test-vm" {
+  name                = "terraform-test-vm"                               # Name of the Linux Virtual Machine.
+  resource_group_name = azurerm_resource_group.terraform-test-rg.name     # The Resource Group where the VM will be created.
+  location            = azurerm_resource_group.terraform-test-rg.location # Azure region for the VM, inherited from the Resource Group.
+  size                = "Standard_B1s"                                    # The size (SKU) of the VM, determining its CPU, RAM, and I/O capabilities.
+  admin_username      = "adminuser"                                       # Username for the administrative account on the VM.
+  network_interface_ids = [
+    azurerm_network_interface.terraform-test-nic.id, # List of Network Interface IDs to attach to this VM.
+  ]
+
+  admin_ssh_key {
+    username   = "adminuser"                             # Username for SSH access.
+    public_key = file("~/.ssh/terraform_test_azure.pub") # Path to the public SSH key for authentication.
+  }
+
+  os_disk {
+    caching              = "ReadWrite"    # Caching setting for the OS disk ("ReadWrite", "ReadOnly", "None").
+    storage_account_type = "Standard_LRS" # Type of storage for the OS disk (e.g., "Standard_LRS", "Premium_LRS").
+  }
+
+  source_image_reference {
+    publisher = "Canonical"    # Publisher of the VM image.
+    offer     = "UbuntuServer" # Offer of the VM image (e.g., "UbuntuServer", "WindowsServer").
+    sku       = "18.04-LTS"    # SKU of the VM image (e.g., "18.04-LTS", "2019-Datacenter").
+    version   = "latest"       # Version of the VM image to use. "latest" is common for development.
+  }
+}
