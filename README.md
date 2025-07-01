@@ -57,7 +57,14 @@ Step-by-step guide to get your development environment running.
     ```bash
     terraform apply -destroy
     ```
-
+4.  **Terraform list existing resources:**
+    ```bash
+    terraform state list
+    ```
+5.  **Terraform show specific resource info:**
+    ```bash
+    terraform state show <resouce name> 
+    ```    
 ---
 
 ## 🚀 Usage

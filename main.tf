@@ -81,3 +81,14 @@ resource "azurerm_subnet_network_security_group_association" "terraform-test-sga
   subnet_id                 = azurerm_subnet.terraform-test-subnet.id             # The ID of the subnet to associate the NSG with.
   network_security_group_id = azurerm_network_security_group.terraform-test-sg.id # The ID of the Network Security Group to associate with the subnet.
 }
+
+resource "azurerm_public_ip" "terraform-test-ip" {
+  name                = "terraform-test-ip"                               # Name of the Public IP address.
+  resource_group_name = azurerm_resource_group.terraform-test-rg.name     # The Resource Group where the Public IP will be created.
+  location            = azurerm_resource_group.terraform-test-rg.location # The Azure region for the Public IP, inherited from the Resource Group.
+  allocation_method   = "Dynamic"                                         # Defines how the IP address is allocated ("Static" or "Dynamic").
+
+  tags = {
+    environment = "dev" # Tag to specify the environment.
+  }
+}
