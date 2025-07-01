@@ -1,26 +1,26 @@
 # Terraform ignores
-.terraform/                 # Terraform's internal working directory (contains downloaded providers, modules, etc.)
-*.tfplan                    # Saved Terraform execution plans
-*.tfstate                   # Local Terraform state file (if not using remote state)
-*.tfstate.backup            # Backup Terraform state files
+.terraform/
+*.tfplan
+*.tfstate
+*.tfstate.backup
 
-# Variable definition files (often contain sensitive data)
-*.tfvars                    # Generic .tfvars files
-*.tfvars.json               # JSON formatted .tfvars files
+# Variable definition files
+*.tfvars
+*.tfvars.json
 
 # Crash logs
-crash.log                   # Terraform crash log file
+crash.log
 
-# Override files (often for local testing or temporary changes)
-override.tf                 # Override files
-override_*.tf               # Wildcard for override files
+# Override files
+override.tf
+override_*.tf
 
-# Terraform CLI configuration file (user-specific)
-.terraformrc                # Terraform CLI configuration
+# Terraform CLI configuration file
+.terraformrc
 
-# IDE-specific files (common for various dev environments)
-.vscode/                    # Visual Studio Code settings
-.idea/                      # IntelliJ IDEA settings
-*.iml                       # IntelliJ IDEA module files
-.DS_Store                   # macOS specific files
-Thumbs.db                   # Windows specific files
+# IDE-specific files (common)
+.vscode/
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
