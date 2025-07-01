@@ -120,6 +120,8 @@ resource "azurerm_linux_virtual_machine" "terraform-test-vm" {
     azurerm_network_interface.terraform-test-nic.id, # List of Network Interface IDs to attach to this VM.
   ]
 
+  custom_data = filebase64("customdata.tpl") # install dependecies, configure services, create user or set up SSH keys, and running scripts  
+
   admin_ssh_key {
     username   = "adminuser"                             # Username for SSH access.
     public_key = file("~/.ssh/terraform_test_azure.pub") # Path to the public SSH key for authentication.
