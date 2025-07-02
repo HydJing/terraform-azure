@@ -133,18 +133,18 @@ resource "azurerm_linux_virtual_machine" "terraform-test-vm" {
   }
 
   source_image_reference {
-    publisher = "Canonical"    # Publisher of the VM image.
+    publisher = "Canonical"                    # Publisher of the VM image.
     offer     = "0001-com-ubuntu-server-jammy" # Offer of the VM image.
-    sku       = "22_04-lts-gen2"    # SKU of the VM image, or try "az vm image list-skus" to find.
-    version   = "latest"       # Version of the VM image to use. "latest" is common for development.
+    sku       = "22_04-lts-gen2"               # SKU of the VM image, or try "az vm image list-skus" to find.
+    version   = "latest"                       # Version of the VM image to use. "latest" is common for development.
   }
 
   provisioner "local-exec" {
     command = templatefile("ssh-script-windows.tpl", {
-      hostname = self.public_ip_address,
-      user = "adminuser",
+      hostname     = self.public_ip_address,
+      user         = "adminuser",
       identityfile = "~/.ssh/terraform_test_azure",
-      ssh_user = var.local_ssh_username
+      ssh_user     = var.local_ssh_username
     })
     interpreter = ["Powershell", "-Command"] # Linux use ["bash", "-c"]
   }
@@ -154,6 +154,10 @@ resource "azurerm_linux_virtual_machine" "terraform-test-vm" {
   }
 }
 
+data "azurerm_public_ip" "terraform-test-ip-data" {
+  name                = azurerm_public_ip.terraform-test-ip.name
+  resource_group_name = azurerm_resource_group.terraform-test-rg.name
+}
 
 # Define the variables in your variables.tf or pass them via CLI/environment variables
 variable "local_ssh_username" {
