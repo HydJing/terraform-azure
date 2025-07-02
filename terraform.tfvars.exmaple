@@ -1,3 +1,4 @@
+# define the value for variable, like a shopping list, "Salt = 1 teaspoon", "Water Quantity = 3 cups", "Spicy Level = 4"
 # terraform.tfvars (DO NOT COMMIT THIS FILE TO GIT!)
 local_ssh_username       = ""
 host_os = "windows"

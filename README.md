@@ -119,7 +119,13 @@ Some helpful Azure commands
 
 ## 🚀 Usage
 
-should Run the command and deploy to Azure.
+make sure you login to Azure
+
+```bash
+az login
+```
+
+should Run the command and it will create the resources in Azure automatically.
 
 ```bash
 terraform apply -auto-approve
@@ -132,4 +138,9 @@ ssh -i ~/.ssh/terraform-test-azure adminuser@<public ip address>
 to find public ip address run terraform cli to check VM detail
 ```bash
 terraform state show azurerm_linux_virtual_machine.terraform-test-vm
+```
+
+DO NOT FORGOT TO DESTROY 
+```bash
+terraform destroy -auto-approve
 ```

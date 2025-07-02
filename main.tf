@@ -140,13 +140,15 @@ resource "azurerm_linux_virtual_machine" "terraform-test-vm" {
   }
 
   provisioner "local-exec" {
+    # Executes a command on the machine where Terraform is being run (your local machine).
     command = templatefile("ssh-script-${var.host_os}.tpl", {
-      hostname     = self.public_ip_address,
-      user         = "adminuser",
-      identityfile = "~/.ssh/terraform_test_azure",
-      ssh_user     = var.local_ssh_username
+      # The 'templatefile' function reads a template file and interpolates variables into it.
+      hostname     = self.public_ip_address,        # The public IP address of the newly created VM.
+      user         = "adminuser",                   # The username for SSH access on the remote VM.
+      identityfile = "~/.ssh/terraform_test_azure", # The path to the SSH private key on your local machine.
+      ssh_user     = var.local_ssh_username         # Your local operating system's username.
     })
-    interpreter = var.host_os == "windows" ? ["Powershell", "-Command"] : ["bash", "-c"]
+    interpreter = var.host_os == "windows" ? ["Powershell", "-Command"] : ["bash", "-c"] # Dynamically sets the interpreter
   }
 
   tags = {
@@ -154,18 +156,15 @@ resource "azurerm_linux_virtual_machine" "terraform-test-vm" {
   }
 }
 
+# This block retrieves information about an existing Azure Public IP resource.
 data "azurerm_public_ip" "terraform-test-ip-data" {
-  name                = azurerm_public_ip.terraform-test-ip.name
-  resource_group_name = azurerm_resource_group.terraform-test-rg.name
+  name                = azurerm_public_ip.terraform-test-ip.name      # References the name of the Public IP resource.
+  resource_group_name = azurerm_resource_group.terraform-test-rg.name # References the name of the Resource Group.
 }
 
+# This block defines an output value that will be displayed after 'terraform apply' completes.
 output "public_ip_address" {
+  # The value combines the name of the VM and the IP address obtained from the data source.
   value = "${azurerm_linux_virtual_machine.terraform-test-vm.name}: ${data.azurerm_public_ip.terraform-test-ip-data.ip_address}"
 }
 
-# Define the variables in your variables.tf or pass them via CLI/environment variables
-variable "local_ssh_username" {
-  description = "Your local Windows user folder name for SSH config."
-  type        = string
-  sensitive   = false # Mark as sensitive if it could contain PII or be a security risk
-}
