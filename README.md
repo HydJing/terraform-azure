@@ -41,13 +41,15 @@ List any software, tools, or accounts required before setting up the project.
 ssh-keygen -t rsa
 ```
 
-with same path but different file name.
+with same path but use different file name to identify the keys.
+
+Rename file `terraform.tfvars.example` to `terraform.tfvars` and update variables for Windows local user folder name.
 
 ---
 
-### Installation
+### Terraform Commands
 
-Step-by-step guide to get your development environment running.
+Some helpful Terraform commands
 
 0.  **Terraform format the syntax:**
     ```bash
@@ -73,15 +75,32 @@ Step-by-step guide to get your development environment running.
     ```bash
     terraform state show <resouce name> 
     ```    
+6.  **Terraform replace specific resource:**
+    ```bash
+    terraform apply -replace <resouce name> 
+    ```    
+
 ---
+
+### Azure Commands
+
+Some helpful Azure commands
+
+0.  **Azure find machine images sku with offer and publisher:**
+    ```bash
+    # Since offer being changed for Ubuntu version after 18.04
+    az vm image list-skus --location useast --publisher Canonical --offer 0001-com-ubuntu-server-jammy --output table 
+    ```
+
+---
+
 
 ## 🚀 Usage
 
 should Run the command and deploy to Azure.
 
 ```bash
-# Comment
-to be updated
+terraform apply -auto-approve
 ```
 
 connect to VM

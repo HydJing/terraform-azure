@@ -134,8 +134,30 @@ resource "azurerm_linux_virtual_machine" "terraform-test-vm" {
 
   source_image_reference {
     publisher = "Canonical"    # Publisher of the VM image.
-    offer     = "UbuntuServer" # Offer of the VM image (e.g., "UbuntuServer", "WindowsServer").
-    sku       = "18.04-LTS"    # SKU of the VM image (e.g., "18.04-LTS", "2019-Datacenter").
+    offer     = "0001-com-ubuntu-server-jammy" # Offer of the VM image.
+    sku       = "22_04-lts-gen2"    # SKU of the VM image, or try "az vm image list-skus" to find.
     version   = "latest"       # Version of the VM image to use. "latest" is common for development.
   }
+
+  provisioner "local-exec" {
+    command = templatefile("ssh-script-windows.tpl", {
+      hostname = self.public_ip_address,
+      user = "adminuser",
+      identityfile = "~/.ssh/terraform_test_azure",
+      ssh_user = var.local_ssh_username
+    })
+    interpreter = ["Powershell", "-Command"] # Linux use ["bash", "-c"]
+  }
+
+  tags = {
+    environment = "dev"
+  }
+}
+
+
+# Define the variables in your variables.tf or pass them via CLI/environment variables
+variable "local_ssh_username" {
+  description = "Your local Windows user folder name for SSH config."
+  type        = string
+  sensitive   = false # Mark as sensitive if it could contain PII or be a security risk
 }

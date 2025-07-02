@@ -1,0 +1,2 @@
+# terraform.tfvars (DO NOT COMMIT THIS FILE TO GIT!)
+local_ssh_username       = ""
