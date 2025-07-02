@@ -96,6 +96,11 @@ Some helpful Terraform commands
     # see or get specific pieces of information about your infrastructure.
     terraform output <?data name> 
     ```
+9.  **Terraform console:**
+    ```bash
+    # run terraform console with custom argument.
+    terraform console -var="host_os=linux" -var-file="osx.tfvars"
+    ```
 
 ---
 
