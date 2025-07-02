@@ -159,6 +159,10 @@ data "azurerm_public_ip" "terraform-test-ip-data" {
   resource_group_name = azurerm_resource_group.terraform-test-rg.name
 }
 
+output "public_ip_address" {
+  value = "${azurerm_linux_virtual_machine.terraform-test-vm.name}: ${data.azurerm_public_ip.terraform-test-ip-data.ip_address}"
+}
+
 # Define the variables in your variables.tf or pass them via CLI/environment variables
 variable "local_ssh_username" {
   description = "Your local Windows user folder name for SSH config."

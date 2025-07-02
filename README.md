@@ -91,6 +91,11 @@ Some helpful Terraform commands
     # This command is primarily used for drift detection and state synchronization when you suspect manual changes have occurred in your cloud environment outside of Terraform.
     terraform apply -refresh-only 
     ```
+8.  **Terraform show output data:**
+    ```bash
+    # see or get specific pieces of information about your infrastructure.
+    terraform output <?data name> 
+    ```
 
 ---
 
